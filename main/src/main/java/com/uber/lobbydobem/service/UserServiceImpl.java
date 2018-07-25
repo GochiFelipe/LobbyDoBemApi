@@ -3,6 +3,7 @@ package com.uber.lobbydobem.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,4 +48,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
+
+	@Override
+	public User findByEmail(String email) {
+		return userRepository.findByUsername(email);
+	}
+
+	@Override
+	public Optional<User> findById(Long id) {
+		return userRepository.findById(id);
+	}
 }

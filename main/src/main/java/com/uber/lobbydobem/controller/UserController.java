@@ -25,18 +25,23 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping(value="/user")
+    @GetMapping("/user")
     public List<?> listUser(){
         return userService.findAll();
     }
+    
+    @GetMapping("/{email}")
+    public User findUserByEmail(@PathVariable(value = "email") String email) {
+    	return userService.findByEmail(email);
+    }
 
-    @PostMapping(value = "/user")
+    @PostMapping("/user")
     public User create(@RequestBody User user){
     	user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.save(user);
     }
 
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping("/user/{id}")
     public String delete(@PathVariable(value = "id") Long id){
         userService.delete(id);
         return "success";
