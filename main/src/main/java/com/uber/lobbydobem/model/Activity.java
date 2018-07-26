@@ -9,8 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +39,12 @@ public class Activity {
 	private String state;
 	@Column
 	private String typeRegister;
-	@OneToMany
+	@ManyToMany
+	@JoinTable(name="ACTIVITY_CANDIDATE", joinColumns = {
+		@JoinColumn(name="activityId")
+	}, inverseJoinColumns = {
+		@JoinColumn(name="candidatoId")
+	})
 	private List<Candidates> candidates;
 	@ManyToOne
 	@JoinColumn(name="person_id")

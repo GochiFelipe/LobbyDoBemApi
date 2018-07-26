@@ -1,11 +1,14 @@
 package com.uber.lobbydobem.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -45,13 +48,18 @@ public class Candidates {
 	private String andar;
 	@Column
 	private String sala;
+	@Column
+	private String state;
+	@ManyToMany(mappedBy="candidates")
+	private List<Activity> activity;
 	
 
-	public Long getCandidatosId() {
+	
+	public Long getCandidatoId() {
 		return candidatoId;
 	}
-	public void setCandidatosId(Long candidatosId) {
-		this.candidatoId = candidatosId;
+	public void setCandidatoId(Long candidatoId) {
+		this.candidatoId = candidatoId;
 	}
 	public String getNome() {
 		return nome;
@@ -131,5 +139,12 @@ public class Candidates {
 	public void setSala(String sala) {
 		this.sala = sala;
 	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
 	
 }
