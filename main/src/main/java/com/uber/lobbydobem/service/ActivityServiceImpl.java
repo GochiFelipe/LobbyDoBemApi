@@ -21,6 +21,7 @@ public class ActivityServiceImpl implements ActivityService{
 	public Activity save(Activity activity) {
 		return activityRepository.save(activity);
 	}
+	
 
 	@Override
 	public Optional<Activity> findById(Long id) {
@@ -30,12 +31,19 @@ public class ActivityServiceImpl implements ActivityService{
 
 	@Override
 	public void delete(Long id) {
-		activityRepository.deleteById(id);
+		Optional<Activity> activity = activityRepository.findById(id);
+		activity.get().setEnable(false);
+		activityRepository.save(activity.get());
 	}
 
 	@Override
 	public List<Activity> findByPerson(Person person) {
 		return activityRepository.findByPerson(person);
+	}
+
+	@Override
+	public List<Activity> findByPersonAndEnable(Person person, Boolean enable) {
+		return activityRepository.findByPersonAndEnable(person, enable);
 	}
 
 }

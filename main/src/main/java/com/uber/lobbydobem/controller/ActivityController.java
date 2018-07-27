@@ -35,13 +35,25 @@ public class ActivityController {
 		return activityService.findByPerson(person.get());
 	}
 	
+	@GetMapping("/enable/{id}")
+	public List<Activity> listAllActivityForPersonAndEnable(@PathVariable(value = "id") Long idPerson) {
+		Optional<Person> person = personService.findById(idPerson);
+		return activityService.findByPersonAndEnable(person.get(), true);
+	}
+	
 	@PostMapping("/{id}")
 	public Activity create(@RequestBody Activity activity, @PathVariable(value = "id") Long idPerson) {
 		Optional<Person> person = personService.findById(idPerson);
 		activity.setPerson(person.get());
-		Date date = Calendar.getInstance().getTime();
-		activity.setDateCriation(date);
-		return activityService.save(activity);
+		activity.setEnable(true);
+		if (activity.getActivityId() != null) {
+			return this.updateActivity(activity);
+		}
+		else {			
+			Date date = Calendar.getInstance().getTime();
+			activity.setDateCriation(date);
+			return activityService.save(activity);
+		}
 	}
 	
 	@GetMapping("/{id}")
@@ -53,6 +65,7 @@ public class ActivityController {
 	public Activity updateActivity(@RequestBody Activity activity) {
 		Date date = Calendar.getInstance().getTime();
 		activity.setDateUpdate(date);
+		activity.setEnable(true);
 		return activityService.save(activity);
 	}
 	

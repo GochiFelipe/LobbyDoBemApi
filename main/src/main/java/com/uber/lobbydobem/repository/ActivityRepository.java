@@ -9,4 +9,5 @@ import com.uber.lobbydobem.model.Person;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long>{
 	public List<Activity> findByPerson(Person person);
+	public List<Activity> findByPersonAndEnable(Person person, Boolean booleanEnable);
 }

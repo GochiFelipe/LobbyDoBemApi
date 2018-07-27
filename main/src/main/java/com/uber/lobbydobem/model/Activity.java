@@ -50,6 +50,8 @@ public class Activity {
 	@JoinColumn(name="person_id")
 	@JsonIgnore
 	private Person person;
+	@Column
+	private Boolean enable;
 
 	
 	public Long getActivityId() {
@@ -118,7 +120,12 @@ public class Activity {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+	public Boolean getEnable() {
+		return enable;
+	}
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
 	
 
 }
