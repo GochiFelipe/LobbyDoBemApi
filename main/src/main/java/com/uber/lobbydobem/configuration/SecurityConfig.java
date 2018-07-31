@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -50,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.csrf().disable().anonymous().disable().authorizeRequests().antMatchers("/api-docs/**").permitAll();
+		.csrf().disable().anonymous().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/path/to/allow").permitAll().antMatchers("/api-docs/**").permitAll();
 	}
 
 	@Bean
@@ -67,7 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public FilterRegistrationBean corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    CorsConfiguration configAutenticacao = new CorsConfiguration();
-	    configAutenticacao.setAllowCredentials(true);
 	    configAutenticacao.addAllowedOrigin("*");
 	    configAutenticacao.addAllowedHeader("Authorization");
 	    configAutenticacao.addAllowedHeader("Content-Type");
@@ -77,7 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    configAutenticacao.addAllowedMethod("DELETE");
 	    configAutenticacao.addAllowedMethod("PUT");
 	    configAutenticacao.addAllowedMethod("OPTIONS");
-	    configAutenticacao.setMaxAge(3600L);
 		source.registerCorsConfiguration("/**", configAutenticacao);
 		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
