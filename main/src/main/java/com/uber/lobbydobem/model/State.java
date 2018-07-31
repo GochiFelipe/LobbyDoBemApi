@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ESTADOS")
+@NamedQuery(name="State.findAll", query="select e from State e order by e.nome")
 public class State {
 	
 	@Id
